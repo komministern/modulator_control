@@ -25,7 +25,8 @@ class MyModel(QtCore.QObject):
 
     def init_socket(self):
         self.udp_socket = QtNetwork.QUdpSocket(self)
-        self.udp_socket.bind(QtNetwork.QHostAddress('192.168.1.170'), 17000)
+        #self.udp_socket.bind(QtNetwork.QHostAddress('127.0.0.1'), 16999)
+        self.udp_socket.bind(16999)
         self.udp_socket.readyRead.connect(self.read_pending_datagrams)
 
     def quit(self):
@@ -33,11 +34,11 @@ class MyModel(QtCore.QObject):
 
     def send_settings(self):
         print('Sending....')
-        self.udp_socket.writeDatagram(QtNetwork.QNetworkDatagram(bytes('Jesus Lever!', 'utf-8')))
+        self.udp_socket.writeDatagram(bytes('Jesus Lever!', 'utf-8'), QtNetwork.QHostAddress('192.168.1.170'), 17000)
 
     def read_pending_datagrams(self):
         while self.udp_socket.hasPendingDatagrams():
-            datagram = QtNetwork.QByteArray()
+            datagram = QtCore.QByteArray()
             datagram.resize(self.udp_socket.pendingDatagramSize())
 
             datagram, sender_address, sender_port = self.udp_socket.readDatagram(datagram.size())
