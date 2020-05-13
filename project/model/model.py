@@ -1,9 +1,8 @@
-﻿#!python
-# -*- coding: utf-8 -*-
+﻿# -*- coding: utf-8 -*-
 
-#    Copyright © 2016, 2017, 2018 Oscar Franzén <oscarfranzen@protonmail.com>
+#    Copyright © 2020 Oscar Franzén <oscarfranzen@protonmail.com>
 #
-#    This file is part of GCA Analysis Tool.
+#    This file is part of Modulator Controller.
 
 #import logging
 from PySide2 import QtCore, QtWidgets, QtNetwork
@@ -12,37 +11,53 @@ from PySide2 import QtCore, QtWidgets, QtNetwork
 
 class MyModel(QtCore.QObject):
 
-    command_response = QtCore.Signal(bool)
+    command_ack = QtCore.Signal(bool)
 
     def __init__(self):
         super(MyModel, self).__init__()
 
         self.tcc_address = QtNetwork.QHostAddress('192.168.1.170')
-        self.tcc_port = 17000
+        self.tcc_command_port = 17000
+
+        self.local_command_port = 17000
+        self.local_ack_port = 17001
+        self.local_data_port = 17002
 
         self.charge_trig_length = 0
         self.dq_trig_delay = 0
         self.mod_trig_delay = 0
         self.mod_trig_length = 0
         self.mod_state = 'off'  # or 'charge' or 'modulate
-        self.dq_state = 'off'   # or 'on' or remote
+        self.dq_state = 'remote'   # or 'local'
 
-        self.sent_message = ''
+        self.sent_command_message = ''
 
-        self.response_timer = QtCore.QTimer()
-        self.response_timer.timeout.connect(self.message_timeout)
+        self.ack_timer = QtCore.QTimer()
+        self.ack_timer.timeout.connect(self.message_timeout)
     
-        self.init_socket()
+        self.init_command_socket()
+        self.init_ack_socket()
+        self.init_data_socket()
 
 
-    def init_socket(self):
-        self.udp_socket = QtNetwork.QUdpSocket(self)
-        #self.udp_socket.bind(QtNetwork.QHostAddress('127.0.0.1'), 16999)
-        self.udp_socket.bind(16999)
-        self.udp_socket.readyRead.connect(self.read_pending_datagrams)
+    def init_ack_socket(self):
+        self.ack_socket = QtNetwork.QUdpSocket(self)
+        self.ack_socket.bind(self.local_ack_port)
+        self.ack_socket.readyRead.connect(self.read_pending_ack_datagrams)
+
+    def init_data_socket(self):
+        self.data_socket = QtNetwork.QUdpSocket(self)
+        self.data_socket.bind(self.local_data_port)
+        self.data_socket.readyRead.connect(self.read_pending_data_datagrams)
+
+    def init_command_socket(self):
+        self.command_socket = QtNetwork.QUdpSocket(self)
+        self.command_socket.bind(self.local_command_port)
+        self.command_socket.readyRead.connect(self.read_pending_command_datagrams)
+
 
     def quit(self):
-        self.udp_socket.close()
+        self.ack_socket.close()
         QtWidgets.QApplication.quit()
 
     def set_mod_state(self, state):
@@ -51,41 +66,75 @@ class MyModel(QtCore.QObject):
     def set_dq_state(self, state):
         self.dq_state = state
 
-    def send_settings(self):
-        #print('Sending....')
+    def send_command(self):
         sequence = (str(self.charge_trig_length), str(self.dq_trig_delay), str(self.mod_trig_delay), str(self.mod_trig_length), str(self.mod_state), str(self.dq_state))
         message = ','.join(sequence)
 
-        self.sent_message = message
-        self.response_timer.start(1000)
+        self.sent_command_message = message
+        self.ack_timer.start(100)
 
-        self.udp_socket.writeDatagram(message.encode('utf-8'), self.tcc_address, self.tcc_port)
+        self.ack_socket.writeDatagram(message.encode('utf-8'), self.tcc_address, self.tcc_command_port)
 
     def message_timeout(self):
-        self.response_timer.stop()
-        self.command_response.emit(False)
-        
+        self.ack_timer.stop()
+        self.command_ack.emit(False)
+        print('Ack timeout.')
 
 
-    def read_pending_datagrams(self):
-        while self.udp_socket.hasPendingDatagrams():
+
+    def read_pending_ack_datagrams(self):
+
+        while self.ack_socket.hasPendingDatagrams():
             
             datagram = QtCore.QByteArray()
-            datagram.resize(self.udp_socket.pendingDatagramSize())
+            datagram.resize(self.ack_socket.pendingDatagramSize())
 
-            datagram, sender_address, sender_port = self.udp_socket.readDatagram(datagram.size())
+            datagram, sender_address, sender_port = self.ack_socket.readDatagram(datagram.size())
 
-            received_message = datagram.data().decode('utf-8')
+            ack_message = datagram.data().decode('utf-8')
 
-            if received_message == self.sent_message:
-                self.response_timer.stop()
-                self.command_response.emit(True)
+            if ack_message == self.sent_command_message:
+                self.ack_timer.stop()
+                self.command_ack.emit(True)
 
-                print(received_message)
+                print('Received ack: ' + ack_message)
 
             else:
-                print('Received different answer. (' + received_message + ')')
 
+                print('Received erroneous ack: ' + ack_message)
+                self.command_ack.emit(False)
+
+
+    def read_pending_data_datagrams(self):
+
+        while self.data_socket.hasPendingDatagrams():
+
+            datagram = QtCore.QByteArray()
+            datagram.resize(self.data_socket.pendingDatagramSize())
+
+            datagram, sender_address, sender_port = self.data_socket.readDatagram(datagram.size())
+
+            data_message = datagram.data().decode('utf-8')
+
+            print('Received data: ' + data_message)
+
+            #DOSTUFF
+                
+
+    def read_pending_command_datagrams(self):
+
+        while self.command_socket.hasPendingDatagrams():
+
+            datagram = QtCore.QByteArray()
+            datagram.resize(self.command_socket.pendingDatagramSize())
+
+            datagram, sender_address, sender_port = self.command_socket.readDatagram(datagram.size())
+
+            command_message = datagram.data().decode('utf-8')
+
+            print('Received command: ' + command_message)
+
+            #DOSTUFF
                 
 
 

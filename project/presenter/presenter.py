@@ -38,7 +38,7 @@ class MyPresenter(QtCore.QObject):
     def connect_signals(self):
         self.view.quit.connect(self.model.quit)
 
-        self.model.command_response.connect(self.set_sync_state)
+        self.model.command_ack.connect(self.set_sync_state)
 
         self.view.pushButton_Apply.pressed.connect(self.apply_settings)
 
@@ -46,7 +46,8 @@ class MyPresenter(QtCore.QObject):
         self.view.radioButton_Charge.pressed.connect(self.set_charge_state)
         self.view.radioButton_Off.pressed.connect(self.set_off_state)
 
-        self.view.radioButton_DQ.toggled.connect(self.set_dq_state)
+        self.view.radioButton_DQ_Local.pressed.connect(self.set_dq_local)
+        self.view.radioButton_DQ_Remote.pressed.connect(self.set_dq_remote)
 
         self.view.horizontalSlider_chargeTrigLength.valueChanged.connect(self.set_charge_trig_length)
         self.view.horizontalSlider_dqTrigDelay.valueChanged.connect(self.set_dq_trig_delay)
@@ -65,12 +66,14 @@ class MyPresenter(QtCore.QObject):
         self.model.set_mod_state('modulate')
         self.set_sync_state(False)
     
-    def set_dq_state(self):
-        print(self.view.radioButton_DQ.isChecked())
-        if self.view.radioButton_DQ.isChecked():
-            self.model.set_dq_state('on')
-        else:
-            self.model.set_dq_state('off')
+    def set_dq_remote(self):
+        self.model.set_dq_state('remote')
+        self.view.horizontalSlider_dqTrigDelay.setEnabled(True)
+        self.set_sync_state(False)
+
+    def set_dq_local(self):
+        self.model.set_dq_state('remote')
+        self.view.horizontalSlider_dqTrigDelay.setEnabled(False)
         self.set_sync_state(False)
 
 
@@ -101,4 +104,4 @@ class MyPresenter(QtCore.QObject):
         self.set_sync_state(False)
 
     def apply_settings(self):
-        self.model.send_settings()
+        self.model.send_command()
