@@ -17,11 +17,11 @@ class MyPresenter(QtCore.QObject):
         self.view = view
         self.app = app
 
-        self.view.horizontalSlider_chargeTrigLength.setValue(300)
-        self.set_charge_trig_length(300)
+        self.view.horizontalSlider_chargeTrigLength.setValue(350)
+        self.set_charge_trig_length(350)
 
-        self.view.horizontalSlider_dqTrigDelay.setValue(240)
-        self.set_dq_trig_delay(240)
+        self.view.horizontalSlider_dqTrigDelay.setValue(250)
+        self.set_dq_trig_delay(250)
 
         self.view.horizontalSlider_modTrigDelay.setValue(400)
         self.set_mod_trig_delay(400)
@@ -29,7 +29,7 @@ class MyPresenter(QtCore.QObject):
         self.view.horizontalSlider_modTrigLength.setValue(30)
         self.set_mod_trig_length(30)
 
-        #self.view.pushButton_off.setEnabled(False)
+        self.set_sync_state(False)
 
         self.connect_signals()
 
@@ -37,29 +37,68 @@ class MyPresenter(QtCore.QObject):
 
     def connect_signals(self):
         self.view.quit.connect(self.model.quit)
+
+        self.model.command_response.connect(self.set_sync_state)
+
         self.view.pushButton_Apply.pressed.connect(self.apply_settings)
+
+        self.view.radioButton_Modulate.pressed.connect(self.set_modulate_state)
+        self.view.radioButton_Charge.pressed.connect(self.set_charge_state)
+        self.view.radioButton_Off.pressed.connect(self.set_off_state)
+
+        self.view.radioButton_DQ.toggled.connect(self.set_dq_state)
 
         self.view.horizontalSlider_chargeTrigLength.valueChanged.connect(self.set_charge_trig_length)
         self.view.horizontalSlider_dqTrigDelay.valueChanged.connect(self.set_dq_trig_delay)
         self.view.horizontalSlider_modTrigDelay.valueChanged.connect(self.set_mod_trig_delay)
         self.view.horizontalSlider_modTrigLength.valueChanged.connect(self.set_mod_trig_length)
 
+    def set_off_state(self):
+        self.model.set_mod_state('off')
+        self.set_sync_state(False)
+    
+    def set_charge_state(self):
+        self.model.set_mod_state('charge')
+        self.set_sync_state(False)
+
+    def set_modulate_state(self):
+        self.model.set_mod_state('modulate')
+        self.set_sync_state(False)
+    
+    def set_dq_state(self):
+        print(self.view.radioButton_DQ.isChecked())
+        if self.view.radioButton_DQ.isChecked():
+            self.model.set_dq_state('on')
+        else:
+            self.model.set_dq_state('off')
+        self.set_sync_state(False)
+
+
+    def set_sync_state(self, status):
+        if status == True:
+            self.view.label_Sync.setStyleSheet("QLabel { background-color : green; }")
+        else:
+            self.view.label_Sync.setStyleSheet("QLabel { background-color : yellow; }")
 
     def set_charge_trig_length(self, value):
         self.model.charge_trig_length = value
         self.view.lineEdit_chargeTrigLength.setText(str(value) + ' μs')
+        self.set_sync_state(False)
 
     def set_dq_trig_delay(self, value):
         self.model.dq_trig_delay = value
         self.view.lineEdit_dqTrigDelay.setText(str(value) + ' μs')
+        self.set_sync_state(False)
 
     def set_mod_trig_delay(self, value):
         self.model.mod_trig_delay = value
         self.view.lineEdit_modTrigDelay.setText(str(value) + ' μs')
+        self.set_sync_state(False)
 
     def set_mod_trig_length(self, value):
         self.model.mod_trig_length = value
         self.view.lineEdit_modTrigLength.setText(str(value) + ' μs')
+        self.set_sync_state(False)
 
     def apply_settings(self):
         self.model.send_settings()
