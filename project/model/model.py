@@ -25,6 +25,9 @@ class MyModel(QtCore.QObject):
 
         self.charge_trig_length = 0
         self.dq_trig_delay = 0
+
+        self.dq_trig_length = 2
+
         self.mod_trig_delay = 0
         self.mod_trig_length = 0
         self.mod_state = 'off'  # or 'charge' or 'modulate
@@ -67,7 +70,7 @@ class MyModel(QtCore.QObject):
         self.dq_state = state
 
     def send_command(self):
-        sequence = (str(self.charge_trig_length), str(self.dq_trig_delay), str(self.mod_trig_delay), str(self.mod_trig_length), str(self.mod_state), str(self.dq_state))
+        sequence = (str(self.charge_trig_length), str(self.dq_trig_delay), str(self.dq_trig_length), str(self.mod_trig_delay), str(self.mod_trig_length), str(self.mod_state), str(self.dq_state))
         message = ','.join(sequence)
 
         self.sent_command_message = message
