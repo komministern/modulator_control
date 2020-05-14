@@ -23,6 +23,9 @@ class MyPresenter(QtCore.QObject):
         self.view.horizontalSlider_dqTrigDelay.setValue(250)
         self.set_dq_trig_delay(250)
 
+        self.view.horizontalSlider_dqTrigLength.setValue(2)
+        self.set_dq_trig_length(2)
+
         self.view.horizontalSlider_modTrigDelay.setValue(400)
         self.set_mod_trig_delay(400)
 
@@ -51,6 +54,7 @@ class MyPresenter(QtCore.QObject):
 
         self.view.horizontalSlider_chargeTrigLength.valueChanged.connect(self.set_charge_trig_length)
         self.view.horizontalSlider_dqTrigDelay.valueChanged.connect(self.set_dq_trig_delay)
+        self.view.horizontalSlider_dqTrigLength.valueChanged.connect(self.set_dq_trig_length)
         self.view.horizontalSlider_modTrigDelay.valueChanged.connect(self.set_mod_trig_delay)
         self.view.horizontalSlider_modTrigLength.valueChanged.connect(self.set_mod_trig_length)
 
@@ -72,7 +76,7 @@ class MyPresenter(QtCore.QObject):
         self.set_sync_state(False)
 
     def set_dq_local(self):
-        self.model.set_dq_state('remote')
+        self.model.set_dq_state('local')
         self.view.horizontalSlider_dqTrigDelay.setEnabled(False)
         self.set_sync_state(False)
 
@@ -91,6 +95,11 @@ class MyPresenter(QtCore.QObject):
     def set_dq_trig_delay(self, value):
         self.model.dq_trig_delay = value
         self.view.lineEdit_dqTrigDelay.setText(str(value) + ' μs')
+        self.set_sync_state(False)
+
+    def set_dq_trig_length(self, value):
+        self.model.dq_trig_length = value
+        self.view.lineEdit_dqTrigLength.setText(str(value) + ' μs')
         self.set_sync_state(False)
 
     def set_mod_trig_delay(self, value):
