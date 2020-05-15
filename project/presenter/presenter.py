@@ -113,4 +113,11 @@ class MyPresenter(QtCore.QObject):
         self.set_sync_state(False)
 
     def apply_settings(self):
-        self.model.send_command()
+
+        # CHECKS
+
+        if self.model.charge_trig_length >= self.model.mod_trig_delay:
+            
+            self.view.textEdit_Status.append('Error: Mod Trig Delay must be greater than Charge Trig Length.')
+        else:
+            self.model.send_command()

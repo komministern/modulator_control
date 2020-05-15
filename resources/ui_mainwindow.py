@@ -3,23 +3,24 @@
 ################################################################################
 ## Form generated from reading UI file 'ui_mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.14.0
+## Created by: Qt User Interface Compiler version 5.14.1
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
 from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
     QRect, QSize, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QFont,
+from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
     QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
     QRadialGradient)
 from PySide2.QtWidgets import *
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(701, 495)
+        MainWindow.resize(669, 604)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout_10 = QGridLayout(self.centralwidget)
@@ -47,8 +48,8 @@ class Ui_MainWindow(object):
 
         self.horizontalSlider_modTrigDelay = QSlider(self.groupBox_2)
         self.horizontalSlider_modTrigDelay.setObjectName(u"horizontalSlider_modTrigDelay")
-        self.horizontalSlider_modTrigDelay.setMinimum(400)
-        self.horizontalSlider_modTrigDelay.setMaximum(600)
+        self.horizontalSlider_modTrigDelay.setMinimum(300)
+        self.horizontalSlider_modTrigDelay.setMaximum(500)
         self.horizontalSlider_modTrigDelay.setSingleStep(1)
         self.horizontalSlider_modTrigDelay.setValue(400)
         self.horizontalSlider_modTrigDelay.setOrientation(Qt.Horizontal)
@@ -79,8 +80,8 @@ class Ui_MainWindow(object):
         sizePolicy1.setVerticalStretch(0)
         sizePolicy1.setHeightForWidth(self.horizontalSlider_dqTrigDelay.sizePolicy().hasHeightForWidth())
         self.horizontalSlider_dqTrigDelay.setSizePolicy(sizePolicy1)
-        self.horizontalSlider_dqTrigDelay.setMinimum(240)
-        self.horizontalSlider_dqTrigDelay.setMaximum(280)
+        self.horizontalSlider_dqTrigDelay.setMinimum(200)
+        self.horizontalSlider_dqTrigDelay.setMaximum(400)
         self.horizontalSlider_dqTrigDelay.setPageStep(5)
         self.horizontalSlider_dqTrigDelay.setValue(240)
         self.horizontalSlider_dqTrigDelay.setOrientation(Qt.Horizontal)
@@ -109,7 +110,7 @@ class Ui_MainWindow(object):
 
         self.horizontalSlider_modTrigLength = QSlider(self.groupBox_3)
         self.horizontalSlider_modTrigLength.setObjectName(u"horizontalSlider_modTrigLength")
-        self.horizontalSlider_modTrigLength.setMinimum(25)
+        self.horizontalSlider_modTrigLength.setMinimum(20)
         self.horizontalSlider_modTrigLength.setMaximum(200)
         self.horizontalSlider_modTrigLength.setPageStep(5)
         self.horizontalSlider_modTrigLength.setOrientation(Qt.Horizontal)
@@ -166,7 +167,7 @@ class Ui_MainWindow(object):
         sizePolicy1.setHeightForWidth(self.horizontalSlider_dqTrigLength.sizePolicy().hasHeightForWidth())
         self.horizontalSlider_dqTrigLength.setSizePolicy(sizePolicy1)
         self.horizontalSlider_dqTrigLength.setMinimum(1)
-        self.horizontalSlider_dqTrigLength.setMaximum(5)
+        self.horizontalSlider_dqTrigLength.setMaximum(20)
         self.horizontalSlider_dqTrigLength.setPageStep(1)
         self.horizontalSlider_dqTrigLength.setValue(1)
         self.horizontalSlider_dqTrigLength.setSliderPosition(1)
@@ -179,10 +180,6 @@ class Ui_MainWindow(object):
 
 
         self.gridLayout_10.addWidget(self.groupBox_6, 0, 0, 1, 3)
-
-        self.verticalSpacer = QSpacerItem(20, 1, QSizePolicy.Minimum, QSizePolicy.Expanding)
-
-        self.gridLayout_10.addItem(self.verticalSpacer, 1, 1, 1, 1)
 
         self.groupBox_4 = QGroupBox(self.centralwidget)
         self.groupBox_4.setObjectName(u"groupBox_4")
@@ -210,7 +207,7 @@ class Ui_MainWindow(object):
         self.gridLayout_4.addWidget(self.radioButton_Modulate, 0, 2, 1, 1)
 
 
-        self.gridLayout_10.addWidget(self.groupBox_4, 2, 0, 1, 1)
+        self.gridLayout_10.addWidget(self.groupBox_4, 1, 0, 1, 1)
 
         self.groupBox_5 = QGroupBox(self.centralwidget)
         self.groupBox_5.setObjectName(u"groupBox_5")
@@ -231,7 +228,7 @@ class Ui_MainWindow(object):
         self.gridLayout_5.addWidget(self.radioButton_DQ_Local, 0, 0, 1, 1)
 
 
-        self.gridLayout_10.addWidget(self.groupBox_5, 2, 1, 1, 1)
+        self.gridLayout_10.addWidget(self.groupBox_5, 1, 1, 1, 1)
 
         self.groupBox_8 = QGroupBox(self.centralwidget)
         self.groupBox_8.setObjectName(u"groupBox_8")
@@ -260,12 +257,18 @@ class Ui_MainWindow(object):
         self.gridLayout_8.addWidget(self.label_Sync, 0, 2, 1, 1)
 
 
-        self.gridLayout_10.addWidget(self.groupBox_8, 2, 2, 1, 1)
+        self.gridLayout_10.addWidget(self.groupBox_8, 1, 2, 1, 1)
+
+        self.textEdit_Status = QTextEdit(self.centralwidget)
+        self.textEdit_Status.setObjectName(u"textEdit_Status")
+        self.textEdit_Status.setReadOnly(True)
+
+        self.gridLayout_10.addWidget(self.textEdit_Status, 2, 0, 1, 3)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 701, 26))
+        self.menubar.setGeometry(QRect(0, 0, 669, 21))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
