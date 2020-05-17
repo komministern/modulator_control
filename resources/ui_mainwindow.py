@@ -3,28 +3,27 @@
 ################################################################################
 ## Form generated from reading UI file 'ui_mainwindow.ui'
 ##
-## Created by: Qt User Interface Compiler version 5.14.1
+## Created by: Qt User Interface Compiler version 5.14.0
 ##
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
 
 from PySide2.QtCore import (QCoreApplication, QMetaObject, QObject, QPoint,
     QRect, QSize, QUrl, Qt)
-from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QCursor, QFont,
+from PySide2.QtGui import (QBrush, QColor, QConicalGradient, QFont,
     QFontDatabase, QIcon, QLinearGradient, QPalette, QPainter, QPixmap,
     QRadialGradient)
 from PySide2.QtWidgets import *
-
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(669, 604)
+        MainWindow.resize(719, 622)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.gridLayout_10 = QGridLayout(self.centralwidget)
-        self.gridLayout_10.setObjectName(u"gridLayout_10")
+        self.gridLayout_11 = QGridLayout(self.centralwidget)
+        self.gridLayout_11.setObjectName(u"gridLayout_11")
         self.groupBox_6 = QGroupBox(self.centralwidget)
         self.groupBox_6.setObjectName(u"groupBox_6")
         self.gridLayout_7 = QGridLayout(self.groupBox_6)
@@ -179,7 +178,7 @@ class Ui_MainWindow(object):
         self.gridLayout_7.addWidget(self.groupBox_9, 2, 0, 1, 1)
 
 
-        self.gridLayout_10.addWidget(self.groupBox_6, 0, 0, 1, 3)
+        self.gridLayout_11.addWidget(self.groupBox_6, 0, 0, 1, 3)
 
         self.groupBox_4 = QGroupBox(self.centralwidget)
         self.groupBox_4.setObjectName(u"groupBox_4")
@@ -207,7 +206,7 @@ class Ui_MainWindow(object):
         self.gridLayout_4.addWidget(self.radioButton_Modulate, 0, 2, 1, 1)
 
 
-        self.gridLayout_10.addWidget(self.groupBox_4, 1, 0, 1, 1)
+        self.gridLayout_11.addWidget(self.groupBox_4, 1, 0, 1, 1)
 
         self.groupBox_5 = QGroupBox(self.centralwidget)
         self.groupBox_5.setObjectName(u"groupBox_5")
@@ -228,7 +227,7 @@ class Ui_MainWindow(object):
         self.gridLayout_5.addWidget(self.radioButton_DQ_Local, 0, 0, 1, 1)
 
 
-        self.gridLayout_10.addWidget(self.groupBox_5, 1, 1, 1, 1)
+        self.gridLayout_11.addWidget(self.groupBox_5, 1, 1, 1, 1)
 
         self.groupBox_8 = QGroupBox(self.centralwidget)
         self.groupBox_8.setObjectName(u"groupBox_8")
@@ -257,18 +256,25 @@ class Ui_MainWindow(object):
         self.gridLayout_8.addWidget(self.label_Sync, 0, 2, 1, 1)
 
 
-        self.gridLayout_10.addWidget(self.groupBox_8, 1, 2, 1, 1)
+        self.gridLayout_11.addWidget(self.groupBox_8, 1, 2, 1, 1)
 
-        self.textEdit_Status = QTextEdit(self.centralwidget)
+        self.groupBox_10 = QGroupBox(self.centralwidget)
+        self.groupBox_10.setObjectName(u"groupBox_10")
+        self.gridLayout_10 = QGridLayout(self.groupBox_10)
+        self.gridLayout_10.setObjectName(u"gridLayout_10")
+        self.textEdit_Status = QTextEdit(self.groupBox_10)
         self.textEdit_Status.setObjectName(u"textEdit_Status")
         self.textEdit_Status.setReadOnly(True)
 
-        self.gridLayout_10.addWidget(self.textEdit_Status, 2, 0, 1, 3)
+        self.gridLayout_10.addWidget(self.textEdit_Status, 0, 0, 1, 1)
+
+
+        self.gridLayout_11.addWidget(self.groupBox_10, 2, 0, 1, 3)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 669, 21))
+        self.menubar.setGeometry(QRect(0, 0, 719, 26))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -302,5 +308,6 @@ class Ui_MainWindow(object):
         self.groupBox_8.setTitle("")
         self.pushButton_Apply.setText(QCoreApplication.translate("MainWindow", u"Apply", None))
         self.label_Sync.setText(QCoreApplication.translate("MainWindow", u"Synchronized", None))
+        self.groupBox_10.setTitle(QCoreApplication.translate("MainWindow", u"Log", None))
     # retranslateUi
 

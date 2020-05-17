@@ -1,17 +1,15 @@
 ﻿# -*- coding: utf-8 -*-
-
+#
 #    Copyright © 2020 Oscar Franzén <oscarfranzen@protonmail.com>
 #
-#    This file is part of Modulator Controller.
+#    This file is part of the FMTS modulator control.
 
-#import logging
 from PySide2 import QtCore, QtWidgets, QtNetwork
-
-#logger = logging.getLogger(__name__)
 
 class MyModel(QtCore.QObject):
 
     command_ack = QtCore.Signal(bool)
+    log = QtCore.Signal(str)
 
     def __init__(self):
         super(MyModel, self).__init__()
@@ -80,7 +78,8 @@ class MyModel(QtCore.QObject):
     def message_timeout(self):
         self.ack_timer.stop()
         self.command_ack.emit(False)
-        print('Ack timeout.')
+        self.log.emit('INFO: Command ack timeout.')
+        #print('Ack timeout.')
 
 
 
@@ -99,11 +98,9 @@ class MyModel(QtCore.QObject):
                 self.ack_timer.stop()
                 self.command_ack.emit(True)
 
-                print('Received ack: ' + ack_message)
-
             else:
 
-                print('Received erroneous ack: ' + ack_message)
+                self.log.emit('ERROR: Received faulty ack.')
                 self.command_ack.emit(False)
 
 

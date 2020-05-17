@@ -6,15 +6,15 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>669</width>
-    <height>604</height>
+    <width>801</width>
+    <height>622</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Modulator Control</string>
   </property>
   <widget class="QWidget" name="centralwidget">
-   <layout class="QGridLayout" name="gridLayout_10">
+   <layout class="QGridLayout" name="gridLayout_11">
     <item row="0" column="0" colspan="3">
      <widget class="QGroupBox" name="groupBox_6">
       <property name="title">
@@ -430,10 +430,19 @@
      </widget>
     </item>
     <item row="2" column="0" colspan="3">
-     <widget class="QTextEdit" name="textEdit_Status">
-      <property name="readOnly">
-       <bool>true</bool>
+     <widget class="QGroupBox" name="groupBox_10">
+      <property name="title">
+       <string>Log</string>
       </property>
+      <layout class="QGridLayout" name="gridLayout_10">
+       <item row="0" column="0">
+        <widget class="QTextEdit" name="textEdit_Status">
+         <property name="readOnly">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+      </layout>
      </widget>
     </item>
    </layout>
@@ -443,8 +452,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>669</width>
-     <height>21</height>
+     <width>801</width>
+     <height>26</height>
     </rect>
    </property>
   </widget>

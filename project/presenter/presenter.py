@@ -1,9 +1,8 @@
-﻿#!python
-# -*- coding: utf-8 -*-
-
-#    Copyright © 2016, 2017, 2018 Oscar Franzén <oscarfranzen@protonmail.com>
+﻿# -*- coding: utf-8 -*-
 #
-#    This file is part of GCA Analysis Tool.
+#    Copyright © 2020 Oscar Franzén <oscarfranzen@protonmail.com>
+#
+#    This file is part of the FMTS modulator control.
 
 from PySide2 import QtCore
 
@@ -42,6 +41,7 @@ class MyPresenter(QtCore.QObject):
         self.view.quit.connect(self.model.quit)
 
         self.model.command_ack.connect(self.set_sync_state)
+        self.model.log.connect(self.log)
 
         self.view.pushButton_Apply.pressed.connect(self.apply_settings)
 
@@ -117,7 +117,15 @@ class MyPresenter(QtCore.QObject):
         # CHECKS
 
         if self.model.charge_trig_length >= self.model.mod_trig_delay:
-            
-            self.view.textEdit_Status.append('Error: Mod Trig Delay must be greater than Charge Trig Length.')
+            self.log('INFO: Mod Trig Delay must be greater than Charge Trig Length.')
+        elif self.model.dq_trig_delay > self.model.charge_trig_length:
+            self.log('INFO: DQ Trig Delay must be less than Charge Trig Length.')
         else:
             self.model.send_command()
+
+    
+    def log(self, text):
+        from datetime import datetime
+        time = datetime.now().strftime('%H:%M:%S - ')
+        self.view.textEdit_Status.append(time + text)
+

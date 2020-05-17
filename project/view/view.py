@@ -1,11 +1,10 @@
-﻿#!python
-# -*- coding: utf-8 -*-
-
-#    Copyright © 2016, 2017, 2018 Oscar Franzén <oscarfranzen@protonmail.com>
+﻿# -*- coding: utf-8 -*-
 #
-#    This file is part of GCA Analysis Tool.
+#    Copyright © 2020 Oscar Franzén <oscarfranzen@protonmail.com>
+#
+#    This file is part of the FMTS modulator control.
 
-from PySide2 import QtCore, QtWidgets
+from PySide2 import QtCore, QtWidgets, QtGui
 from view.ui_mainwindow import Ui_MainWindow
 
 class MyView(QtWidgets.QMainWindow, Ui_MainWindow):
@@ -15,6 +14,8 @@ class MyView(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self):
         super(MyView, self).__init__()
         self.setupUi(self)
+        self.setWindowIcon(QtGui.QIcon('radar.png'))
+        
 
     def closeEvent(self, event):
         event.ignore()

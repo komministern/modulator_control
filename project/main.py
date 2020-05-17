@@ -1,10 +1,8 @@
-﻿#!python
-# -*- coding: utf-8 -*-
-
-#    Copyright © 2016, 2017, 2018 Oscar Franzén <oscarfranzen@protonmail.com>
+﻿# -*- coding: utf-8 -*-
 #
-#    This file is part of GCA Analysis Tool.
-
+#    Copyright © 2020 Oscar Franzén <oscarfranzen@protonmail.com>
+#
+#    This file is part of the FMTS modulator control.
 
 import sys
 import logging
@@ -13,14 +11,7 @@ from view.view import MyView
 from presenter.presenter import MyPresenter
 from model.model import MyModel
 
-#logger = logging.getLogger(__name__)    # Ok here?
-#logging.config.fileConfig('logging.ini', disable_existing_loggers=False)
-
 if __name__ == '__main__':
-
-    #multiprocessing.freeze_support()
-
-    #logger = logging.getLogger(__name__)
 
     app = QtWidgets.QApplication(sys.argv)
     model = MyModel()
