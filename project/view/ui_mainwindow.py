@@ -19,7 +19,7 @@ class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         if MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
-        MainWindow.resize(719, 622)
+        MainWindow.resize(811, 622)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
         self.gridLayout_11 = QGridLayout(self.centralwidget)
@@ -274,7 +274,7 @@ class Ui_MainWindow(object):
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
-        self.menubar.setGeometry(QRect(0, 0, 719, 26))
+        self.menubar.setGeometry(QRect(0, 0, 811, 26))
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
@@ -286,7 +286,7 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"Modulator Control", None))
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"FMTS Radar Modulator Circuit Controller", None))
         self.groupBox_6.setTitle(QCoreApplication.translate("MainWindow", u"Triggers", None))
         self.groupBox_2.setTitle(QCoreApplication.translate("MainWindow", u"Mod Trig Delay", None))
         self.lineEdit_modTrigDelay.setText(QCoreApplication.translate("MainWindow", u"12345 us", None))
